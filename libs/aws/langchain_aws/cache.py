@@ -150,10 +150,6 @@ class InMemorySemanticCache(BaseCache):
     # TODO - implement a TTL policy in MemoryDB
 
     DEFAULT_SCHEMA = {
-        "algorithm": "HNSW",
-        "dims": 1536,
-        "distance_metric": "COSINE",
-        "datatype": "FLOAT32",
         "content_key": "prompt",
         "text": [
             {"name": "prompt"},
@@ -270,5 +266,10 @@ class InMemorySemanticCache(BaseCache):
                 )
         llm_cache = self._get_llm_cache(llm_string)
 
-        metadata = {"llm_string": llm_string, "prompt": prompt}
+        # metadata = {"llm_string": llm_string, "prompt": prompt}
+        metadata = {
+            "llm_string": llm_string,
+            "prompt": prompt,
+            "return_val": dumps([g for g in return_val]),
+        }
         llm_cache.add_texts(texts=[prompt], metadatas=[metadata])
